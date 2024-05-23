@@ -1,12 +1,13 @@
 import ProductList from "../components/ProductList";
 import CategoryMenu from "../components/CategoryMenu";
 import Cart from "../components/Cart";
+import Hero from "../components/Hero";
 
 const Home = () => {
   return (
     <div className="container">
-      <CategoryMenu />
-      <ProductList />
+  
+      <Hero />
       <Cart />
     </div>
   );
