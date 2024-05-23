@@ -9,20 +9,21 @@ const productSchema = new Schema({
     trim: true
   },
   description: {
+    type: String,
+    maxlength: 200
+
+  },
+  details: {
     type: String
   },
-  image: {
-    type: String
+  images: {
+    type: [String], // Array of strings to store multiple image URLs
+    required: true,
   },
   price: {
     type: Number,
     required: true,
     min: 0.99
-  },
-  quantity: {
-    type: Number,
-    min: 0,
-    default: 0
   },
   category: {
     type: Schema.Types.ObjectId,
