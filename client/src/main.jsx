@@ -3,12 +3,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 
 import App from './App.jsx';
+import About from './pages/About.jsx'
 import Home from './pages/Home';
 import Detail from './pages/Detail';
-import NoMatch from './pages/NoMatch';
+import NoMatch from './pages/NoMatch'; // changed to Error
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import OrderHistory from './pages/OrderHistory';
+import OrderHistory from './pages/OrderHistory'; //keep name but change location to account info under dropdown 
 import Success from './pages/Success';
 
 const router = createBrowserRouter([
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       }, {
         path: '/success',
         element: <Success />
+      },
+      {
+        path: '/about',
+        element: <About />
       },
     ],
   },
