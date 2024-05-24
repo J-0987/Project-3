@@ -98,7 +98,7 @@ const resolvers = {
                 description: product.description,
                 images: [`${url}/images/${product.thumbnail}`],
               },
-              unit_amount: product.price * 100,
+              unit_amount: Math.round(product.price * 100), // Convert price to cents to avoid this error - "message": "Invalid integer: 1998.9999999999998"
             },
             quantity: product.purchaseQuantity,
           });
@@ -135,12 +135,21 @@ const resolvers = {
     addOrder: async (parent, { products }, context) => {
       try {
         if (context.user) {
-          const order = new Order({ products });
-
-          await User.findByIdAndUpdate(context.user._id, {
-            $push: { orders: order },
-          });
-
+          // Map each ProductInput to extract necessary fields
+          const orderedProducts = products.map(product => ({
+            _id: product._id, // _id is the product ID
+            quantity: product.purchaseQuantity // purchaseQuantity is the desired quantity
+          }));
+    
+          // Create the order with the ordered products
+          const order = new Order({ products: orderedProducts });
+    
+          // Find the user and push the new order
+          await User.findByIdAndUpdate(
+            context.user._id,
+            { $push: { orders: order } }
+          );
+    
           console.log("Added order:", order);
           return order;
         }

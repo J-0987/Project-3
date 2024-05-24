@@ -25,22 +25,9 @@ function Detail() {
   const { products, cart } = state;
 
   useEffect(() => {
-    // already in global store
     if (products.length) {
-      const product = products.find((product) => product._id === id);
-
-      const item = {
-        image: product.image,
-        name: product.name,
-        _id: product._id,
-        price: product.price,
-        quantity: product.quantity,
-      };
-      
-      setCurrentProduct(item);
-    }
-    // retrieved from server
-    else if (data) {
+      setCurrentProduct(products.find((product) => product._id === id));
+    } else if (data) {
       dispatch({
         type: UPDATE_PRODUCTS,
         products: data.products,
@@ -49,9 +36,7 @@ function Detail() {
       data.products.forEach((product) => {
         idbPromise('products', 'put', product);
       });
-    }
-    // get cache from idb
-    else if (!loading) {
+    } else if (!loading) {
       idbPromise('products', 'get').then((indexedProducts) => {
         dispatch({
           type: UPDATE_PRODUCTS,
@@ -78,7 +63,10 @@ function Detail() {
         type: ADD_TO_CART,
         product: { ...currentProduct, purchaseQuantity: 1 },
       });
-      idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
+      idbPromise('cart', 'put', {
+        ...currentProduct,
+        purchaseQuantity: 1,
+      });
     }
   };
 

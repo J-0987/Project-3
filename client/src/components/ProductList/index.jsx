@@ -39,7 +39,7 @@ function ProductList() {
     }
 
     return state.products.filter(
-      (product) => product.category._id === currentCategory
+      (product) => product.category && product.category._id === currentCategory
     );
   }
 
@@ -52,10 +52,12 @@ function ProductList() {
             <ProductItem
               key={product._id}
               _id={product._id}
-              image={product.image}
+              image={product.thumbnail} // Use 'thumbnail' instead of 'image'
               name={product.name}
+              description={product.description} // Add 'description'
               price={product.price}
               quantity={product.quantity}
+              category={product.category ? product.category.name : ''} // Add 'category'
             />
           ))}
         </div>

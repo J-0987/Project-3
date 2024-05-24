@@ -4,16 +4,8 @@ import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 
-function ProductItem(item) {
+function ProductItem({ _id, image, name, price, quantity, category, description, images }) {
   const [state, dispatch] = useStoreContext();
-
-  const {
-    image,
-    name,
-    _id,
-    price,
-    quantity
-  } = item;
 
   const { cart } = state
 
@@ -32,9 +24,9 @@ function ProductItem(item) {
     } else {
       dispatch({
         type: ADD_TO_CART,
-        product: { ...item, purchaseQuantity: 1 }
+        product: { _id, image, name, price, quantity, category, description, images, purchaseQuantity: 1 }
       });
-      idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
+      idbPromise('cart', 'put', { _id, image, name, price, quantity, category, description, images, purchaseQuantity: 1 });
     }
   }
 
@@ -43,7 +35,7 @@ function ProductItem(item) {
       <Link to={`/products/${_id}`}>
         <img
           alt={name}
-          src={`/images/${image}`}
+          src={image}
         />
         <p>{name}</p>
       </Link>

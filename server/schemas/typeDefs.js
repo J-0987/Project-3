@@ -40,11 +40,13 @@ type Auth {
 
 input ProductInput {
   _id: ID
-  purchaseQuantity: Int
-  name: String
   image: String
+  name: String
   price: Float
   quantity: Int
+  category: String  # Add this field
+  description: String  # Add this field
+  purchaseQuantity: Int
 }
 
 type Query {
@@ -58,7 +60,7 @@ type Query {
 
 type Mutation {
   addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-  addOrder(products: [ID]!): Order
+  addOrder(products: [ProductInput]!): Order 
   updateUser(firstName: String, lastName: String, email: String, password: String): User
   updateProduct(_id: ID!, quantity: Int!): Product
   login(email: String!, password: String!): Auth

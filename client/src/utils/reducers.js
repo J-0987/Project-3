@@ -80,6 +80,7 @@ export const reducer = (state, action) => {
       }
 
     default:
+      console.error("Unhandled action type:", action.type);
       return state;
   }
 };
