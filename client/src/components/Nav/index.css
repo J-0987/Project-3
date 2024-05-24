@@ -7,3 +7,8 @@
     overflow: auto; /* Add scroll if content is larger than height */
     column-count: 2;
   }
+
+  .nav-links {
+    display: flex;
+    justify-content: space-between; /* Optional: Add some space between the links */
+  }

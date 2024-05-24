@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 
 
+
 const footer = () => {
     return (
 
@@ -15,6 +16,8 @@ const footer = () => {
              
 
                 </Row>
+
+            
             </Container>
         </footer>
 
