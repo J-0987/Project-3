@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 
 import App from './App.jsx';
-import About from './pages/About.jsx'
+// import About from './pages/About.jsx'
 import Home from './pages/Home';
 import Detail from './pages/Detail';
 import NoMatch from './pages/NoMatch'; // changed to Error
@@ -37,10 +37,10 @@ const router = createBrowserRouter([
         path: '/success',
         element: <Success />
       },
-      {
-        path: '/about',
-        element: <About />
-      },
+      // {
+      //   path: '/about',
+      //   element: <About />
+      // },
     ],
   },
 ]);
