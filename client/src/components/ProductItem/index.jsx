@@ -40,6 +40,7 @@ function ProductItem({ _id, image, name, price, quantity, category, description,
         <p>{name}</p>
       </Link>
       <div>
+    
         <div>{quantity} {pluralize("item", quantity)} in stock</div>
         <span>${price}</span>
       </div>
