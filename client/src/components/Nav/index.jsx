@@ -6,9 +6,21 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import logo from '../assets/logo.png';
 import './index.css';
 import { Link } from 'react-router-dom';
+import Cart from "../Cart";
+import { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+
 
 
 function Navigation() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const categories = [
     'Beauty', 'Fragrances', 'Furniture', 'Groceries', 'Home Decoration',
     'Kitchen Accessories', 'Laptops', 'Mens Shirts', 'Mens Shoes', 'Mens Watches',
@@ -21,11 +33,11 @@ function Navigation() {
     if (Auth.loggedIn()) {
       return (
         <div className='nav-links'>
-<Nav.Link as={Link} to="/" onClick={() => Auth.logout()}>Logout</Nav.Link>
+          <Nav.Link as={Link} to="/" onClick={() => Auth.logout()}>Logout</Nav.Link>
 
-<Nav.Link as={Link} to="/orderHistory">My Account</Nav.Link> 
+          <Nav.Link as={Link} to="/orderHistory">My Account</Nav.Link>
         </div>
-        
+
       )
 
 
@@ -46,34 +58,41 @@ function Navigation() {
   }
 
   return (
-    <Navbar expand="lg"  className="bg-body-tertiary nav-container">
-    <Container >
- 
-  
-      <Navbar.Brand as={Link} to="/">
-       THE SHOP</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="me-auto">
-          {/* <Nav.Link href="#home">Home</Nav.Link>
+    <div>
+<FontAwesomeIcon icon={faCartShopping} />
+      <Cart />
+      <Navbar expand="lg" className="bg-body-tertiary nav-container">
+        <Container >
+
+
+          <Navbar.Brand as={Link} to="/">
+            THE SHOP</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              {/* <Nav.Link href="#home">Home</Nav.Link>
           <Nav.Link href="#link">Link</Nav.Link> */}
-          <NavDropdown className="full-width-dropdown" title="Categories" id="basic-nav-dropdown">
-          {categories.map((category, index) => (
-              <NavDropdown.Item key={index} href={`#${category}`}>
-                {category}
-                </NavDropdown.Item>
-            ))}
-           
-          </NavDropdown>
+              <NavDropdown className="full-width-dropdown" title="Categories" id="basic-nav-dropdown">
+                {categories.map((category, index) => (
+                  <NavDropdown.Item as={Link} to={`/category/${category}`} key={index}>
+                  {category}
+                  </NavDropdown.Item>
+                ))}
+                
 
-        </Nav>
-<Nav>
-{showNavigation()}
-</Nav>
+              </NavDropdown>
 
-      </Navbar.Collapse>
-    </Container>
-  </Navbar>
+
+            </Nav>
+            <Nav>
+              {showNavigation()}
+            </Nav>
+
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </div>
+
   )
 
 

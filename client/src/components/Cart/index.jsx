@@ -7,6 +7,8 @@ import CartItem from '../CartItem';
 import Auth from '../../utils/auth';
 import { useStoreContext } from '../../utils/GlobalState';
 import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import './style.css';
 
 // Initialize Stripe
@@ -73,9 +75,10 @@ const Cart = () => {
   if (!state.cartOpen) {
     return (
       <div className="cart-closed" onClick={toggleCart}>
-        <span role="img" aria-label="trash">
+        <FontAwesomeIcon icon={faCartShopping} />
+        {/* <span role="img" aria-label="trash">
           🛒
-        </span>
+        </span> */}
       </div>
     );
   }
