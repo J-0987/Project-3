@@ -12,7 +12,8 @@ import Signup from './pages/Signup';
 import OrderHistory from './pages/OrderHistory'; //keep name but change location to account info under dropdown 
 import Success from './pages/Success';
 import ProductList from './components/ProductList'
-import CategoryMenu from './components/CategoryMenu'
+import CategoryMenu from './components/CategoryMenu';
+import CategoryPage from './components/CategoryPage';
 
 const router = createBrowserRouter([
   {
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/category/:categoryName',
-        element: <CategoryMenu />
+        element: <CategoryPage />
       },
     ],
   },
