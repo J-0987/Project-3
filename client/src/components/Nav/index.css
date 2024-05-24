@@ -1,0 +1,14 @@
+.full-width-dropdown .dropdown-menu {
+    width: 100vw; /* Full width */
+    height: 50vh; /* Half height */
+    position: fixed; /* Make it cover the full width */
+    left: 0; /* Align it to the left */
+    top: 60px; /* Adjust this value to position it correctly vertically */
+    overflow: auto; /* Add scroll if content is larger than height */
+    column-count: 2;
+  }
+
+  .nav-links {
+    display: flex;
+    justify-content: space-between; /* Optional: Add some space between the links */
+  }

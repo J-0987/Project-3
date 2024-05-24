@@ -1,4 +1,12 @@
-:root {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  min-height: 80vh;
+}
+/* :root {
   --primary: #232F3E;
   --secondary: #F3A847;
   --tertiary: #B12704;
@@ -87,7 +95,7 @@ header a {
   color: var(--light);
 }
 
-button {
+/* button {
   font-size: 1rem;
   text-decoration: none;
   padding: 0.25rem 1rem;
@@ -97,9 +105,9 @@ button {
   cursor: pointer;
   margin: 0 1px;
   background-color: var(--secondary);
-}
+} */
 
-button:hover {
+/* button:hover {
   opacity: .8;
 }
 
@@ -114,9 +122,9 @@ img {
 
 span[role="img"] {
   cursor: default;
-}
+} */
 
-form {
+/* form {
   width: 40%;
 }
 
@@ -127,8 +135,8 @@ input {
   outline: none;
   border-radius: 3px;
   transition: box-shadow 0.2s;
-}
-
+} */
+/* 
 input:focus {
   border: 1px solid var(--secondary);
   box-shadow: 0 0 .25rem rgba(0, 0, 0, .5);
@@ -157,9 +165,9 @@ input:focus {
 .mx-1 {
   margin-right: var(--spacing-one);
   margin-left: var(--spacing-one);
-}
+} */
 
-.mx-2 {
+/* .mx-2 {
   margin-right: var(--spacing-two);
   margin-left: var(--spacing-two);
 }
@@ -201,10 +209,10 @@ input:focus {
 
 .error-text {
   color: var(--error);
-}
+/* } */
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .card {
     width: 100%;
   }
-}
+} */ 

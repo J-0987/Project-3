@@ -1,4 +1,8 @@
-import { Outlet } from "react-router-dom";
+
+import { Outlet } from 'react-router-dom';
+// import 'semantic-ui-css/semantic.min.css';
+import './index.css';
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -7,9 +11,10 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
-import Nav from "./components/Nav";
-import Footer from "./components/Footer";
-import { StoreProvider } from "./utils/GlobalState";
+import Nav from './components/Nav';
+import Footer from './components/Footer';
+// import Footer from './components/Footer'
+import { StoreProvider } from './utils/GlobalState';
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -38,6 +43,7 @@ function App() {
           <Nav />
           <Outlet />
           <Footer />
+
         </StoreProvider>
       </div>
     </ApolloProvider>
