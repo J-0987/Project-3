@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import 'semantic-ui-css/semantic.min.css';
+// import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 import {
   ApolloClient,
@@ -10,6 +10,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 
 import Nav from './components/Nav';
+import Footer from './components/Footer';
 // import Footer from './components/Footer'
 import { StoreProvider } from './utils/GlobalState';
 
@@ -39,6 +40,7 @@ function App() {
         <StoreProvider>
           <Nav />
           <Outlet />
+          <Footer />
  
 
         </StoreProvider>

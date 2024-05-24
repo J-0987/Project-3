@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+
+main {
+  min-height: 80vh;
+}
 /* :root {
   --primary: #232F3E;
   --secondary: #F3A847;

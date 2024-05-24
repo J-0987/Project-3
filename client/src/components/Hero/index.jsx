@@ -1,47 +1,51 @@
 import { useState } from 'react';
 import hero from '../assets/hero.jpg';
 import './index.css'
+import Carousel from 'react-bootstrap/Carousel';
+import heroImg from '../assets/hero.jpg'
+import heroImg2 from '../assets/hero2.jpg'
 
 
-export default function Hero() {
+
+function Hero() {
   return (
-   <div> 
+<div>
 
-    <section className="bg-gray-50">
-  <div className="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center">
-    <div className="mx-auto max-w-xl text-center">
-      <h1 className="text-3xl font-extrabold sm:text-5xl">
-        Understand User Flow.
-        <strong className="font-extrabold text-red-700 sm:block"> Increase Conversion. </strong>
-      </h1>
 
-      <p className="mt-4 sm:text-xl/relaxed">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt illo tenetur fuga ducimus
-        numquam ea!
-      </p>
+<Carousel>
+      <Carousel.Item>
+      <img
+    className="d-block w-100"
+    src={heroImg}
+    alt="First slide"
+  />
+        <Carousel.Caption>
+          <h3>Shop Where your Heart is</h3>
+          <p>Final Class SALE</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+      <img
+    className="d-block w-100"
+    src={heroImg2}
+    alt="Second slide"
+  />
+       
+      </Carousel.Item>
 
-      <div className="mt-8 flex flex-wrap justify-center gap-4">
-        <a
-          className="block w-full rounded bg-red-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-red-700 focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
-          href="#"
-        >
-          Get Started
-        </a>
+      
+     
+    </Carousel>
 
-        <a
-          className="block w-full rounded px-12 py-3 text-sm font-medium text-red-600 shadow hover:text-red-700 focus:outline-none focus:ring active:text-red-500 sm:w-auto"
-          href="#"
-        >
-          Learn More
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-    
-    
-    
-    
+
+
+
 </div>
+
+
+
+    
   )
 }
+
+export default Hero;
