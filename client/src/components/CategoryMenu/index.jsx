@@ -13,26 +13,36 @@ function CategoryMenu() {
 
   const { categories } = state;
 
-  const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
+  const { loading, data: categoryData, error } = useQuery(QUERY_CATEGORIES);
 
   useEffect(() => {
     if (categoryData) {
+      console.log('Fetched categories:', categoryData.categories);
       dispatch({
         type: UPDATE_CATEGORIES,
         categories: categoryData.categories,
       });
       categoryData.categories.forEach((category) => {
-        idbPromise('categories', 'put', category);
-      });
-    } else if (!loading) {
-      idbPromise('categories', 'get').then((categories) => {
-        dispatch({
-          type: UPDATE_CATEGORIES,
-          categories: categories,
+        idbPromise('categories', 'put', category).catch((err) => {
+          console.error('Error saving category to IndexedDB:', err);
         });
       });
+    } else if (error) {
+      console.error('Error fetching categories:', error);
+    } else if (!loading) {
+      idbPromise('categories', 'get')
+        .then((categories) => {
+          console.log('Retrieved categories from IndexedDB:', categories);
+          dispatch({
+            type: UPDATE_CATEGORIES,
+            categories: categories,
+          });
+        })
+        .catch((err) => {
+          console.error('Error retrieving categories from IndexedDB:', err);
+        });
     }
-  }, [categoryData, loading, dispatch]);
+  }, [categoryData, loading, error, dispatch]);
 
   const handleClick = (id) => {
     dispatch({

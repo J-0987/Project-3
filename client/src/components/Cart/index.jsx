@@ -9,26 +9,40 @@ import { useStoreContext } from '../../utils/GlobalState';
 import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
 import './style.css';
 
-//toggle cart is to close cart modal
-// add ultiple to cart
+// Initialize Stripe
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 const Cart = () => {
   const [state, dispatch] = useStoreContext();
-  const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+  const [getCheckout, { loading, data, error }] = useLazyQuery(QUERY_CHECKOUT);
+
+  useEffect(() => {
+    if (error) {
+      console.error('Error fetching checkout session:', error);
+    }
+  }, [error]);
 
   useEffect(() => {
     if (data) {
       stripePromise.then((res) => {
-        res.redirectToCheckout({ sessionId: data.checkout.session });
+        res.redirectToCheckout({ sessionId: data.checkout.session })
+        .then(result => {
+          if (result.error) {
+            console.error('Error redirecting to checkout:', result.error);
+          }
+        });
       });
     }
   }, [data]);
 
   useEffect(() => {
     async function getCart() {
-      const cart = await idbPromise('cart', 'get');
-      dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
+      try {
+        const cart = await idbPromise('cart', 'get');
+        dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
+      } catch (err) {
+        console.error('Error getting cart from IndexedDB:', err);
+      }
     }
 
     if (!state.cart.length) {
@@ -82,7 +96,9 @@ const Cart = () => {
             <strong>Total: ${calculateTotal()}</strong>
 
             {Auth.loggedIn() ? (
-              <button onClick={submitCheckout}>Checkout</button>
+              <button onClick={submitCheckout} disabled={loading}>
+                {loading ? 'Loading...' : 'Checkout'}
+              </button>
             ) : (
               <span>(log in to check out)</span>
             )}

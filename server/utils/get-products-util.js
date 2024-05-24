@@ -59,7 +59,7 @@ async function getCategoriesData() {
 async function getProductsData() {
   try {
     console.log("Fetching products data from API...");
-    const response = await fetch("https://dummyjson.com/products?limit=20"); // fetch 2 products, change the limit to get more products
+    const response = await fetch("https://dummyjson.com/products?limit=20"); // fetch 20 products, change the limit to get more products
     const data = await response.json();
     console.log("Raw products data received:", data);
     return data;

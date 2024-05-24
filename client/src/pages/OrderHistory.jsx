@@ -4,12 +4,13 @@ import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
 
 function OrderHistory() {
-  const { data } = useQuery(QUERY_USER);
-  let user;
+  const { loading, data } = useQuery(QUERY_USER);
 
-  if (data) {
-    user = data.user;
+  if (loading) {
+    return <div>Loading...</div>;
   }
+
+  const user = data ? data.user : null;
 
   return (
     <>
@@ -27,10 +28,10 @@ function OrderHistory() {
                   {new Date(parseInt(order.purchaseDate)).toLocaleDateString()}
                 </h3>
                 <div className="flex-row">
-                  {order.products.map(({ _id, image, name, price }, index) => (
-                    <div key={index} className="card px-1 py-1">
+                  {order.products.map(({ _id, thumbnail, name, price }) => (
+                    <div key={_id} className="card px-1 py-1">
                       <Link to={`/products/${_id}`}>
-                        <img alt={name} src={`/images/${image}`} />
+                        <img alt={name} src={`/images/${thumbnail}`} />
                         <p>{name}</p>
                       </Link>
                       <div>
@@ -42,7 +43,9 @@ function OrderHistory() {
               </div>
             ))}
           </>
-        ) : null}
+        ) : (
+          <h4>You haven't placed any orders yet!</h4>
+        )}
       </div>
     </>
   );
