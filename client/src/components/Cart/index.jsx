@@ -12,12 +12,15 @@ import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { Link } from 'react-router-dom';
+
 import './style.css';
 
 // Initialize Stripe
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 const Cart = () => {
+
   const [state, dispatch] = useStoreContext();
   const [getCheckout, { loading, data, error }] = useLazyQuery(QUERY_CHECKOUT);
   const [show, setShow] = useState(false);
@@ -82,65 +85,11 @@ const Cart = () => {
     });
   }
 
-  // if (!state.cartOpen) {
-
-
-  //   return (
-  //     <div className="cart-closed" onClick={toggleCart}>
-  //       <FontAwesomeIcon icon={faCartShopping} />
-  //       {/* <span role="img" aria-label="trash">
-  //         🛒
-  //       </span> */}
-
-
-  //     </div>
-  //   );
-  // }
-
-  // return (
-  //   <div className="cart">
-  //     <div className="close" onClick={toggleCart}>
-  //       [close]
-  //     </div>
-  //     <h2>Shopping Cart</h2>
-  //     {state.cart.length ? (
-  //       <div>
-  //         {state.cart.map((item) => (
-  //           <CartItem key={item._id} item={item} />
-  //         ))}
-
-  //         <div className="flex-row space-between">
-  //           <strong>Total: ${calculateTotal()}</strong>
-
-  //           {Auth.loggedIn() ? (
-  //             <button onClick={submitCheckout} disabled={loading}>
-  //               {loading ? 'Loading...' : 'Checkout'}
-  //             </button>
-  //           ) : (
-  //             <span>(log in to check out)</span>
-  //           )}
-  //         </div>
-  //       </div>
-  //     ) : (
-  //       <h3>
-  //         <span role="img" aria-label="shocked">
-  //           😱
-  //         </span>
-  //         You haven't added anything to your cart yet!
-  //       </h3>
-  //     )}
-  //   </div>
-  // );
   return (
     <>
       <Button className= "cart-JJ"  onClick={handleShow}>
         <FontAwesomeIcon icon={faCartShopping} />
-        {/* <span role="img" aria-label="trash">
-          🛒
-
    
-        </span> */}
-               {/* BUTTTON */}
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -157,13 +106,7 @@ const Cart = () => {
               <div className="flex-row space-between">
                 <strong>Total: ${calculateTotal()}</strong>
 
-                {Auth.loggedIn() ? (
-                  <button onClick={submitCheckout} disabled={loading}>
-                    {loading ? 'Loading...' : 'Checkout'}
-                  </button>
-                ) : (
-                  <span>(log in to check out)</span>
-                )}
+                
               </div>
             </div>
           ) : (
@@ -179,9 +122,15 @@ const Cart = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
+          {Auth.loggedIn() ? (
+                  <Button onClick={submitCheckout} >
+                   Checkout
+                  </Button>
+                ) : (
+                  <Button as={Link} to="/login" >
+                  Log In/Create Account 
+                 </Button>
+                )}
         </Modal.Footer>
       </Modal>
     </>
