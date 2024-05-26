@@ -44,10 +44,10 @@ function CategoryMenu() {
     }
   }, [categoryData, loading, error, dispatch]);
 
-  const handleClick = (id) => {
+  const handleClick = (slug) => {
     dispatch({
       type: UPDATE_CURRENT_CATEGORY,
-      currentCategory: id,
+      currentCategory: slug,
     });
   };
 
@@ -58,7 +58,7 @@ function CategoryMenu() {
         <button
           key={item._id}
           onClick={() => {
-            handleClick(item._id);
+            handleClick(item.slug); // Pass the category slug
           }}
         >
           {item.name}
@@ -66,7 +66,7 @@ function CategoryMenu() {
       ))}
       <button
         onClick={() => {
-          handleClick('');
+          handleClick(''); // Load all products
         }}
       >
         All

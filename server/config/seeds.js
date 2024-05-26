@@ -1,9 +1,10 @@
-//
 const db = require("./connection");
 const { User, Product, Category } = require("../models");
 const cleanDB = require("./cleanDB");
-const { fetchProducts, fetchCategories } = require("../utils/get-products-util");
-const mongoose = require('mongoose');
+const {
+  fetchProducts,
+  fetchCategories,
+} = require("../utils/get-products-util");
 
 db.once("open", async () => {
   try {
@@ -19,8 +20,16 @@ db.once("open", async () => {
     const incomingCategories = await fetchCategories();
     console.log("Incoming categories:", incomingCategories);
 
+    // Map incoming categories to the expected structure
+    const mappedCategories = incomingCategories.map((category) => ({
+      name: category.name.name,
+      slug: category.name.slug,
+      url: category.name.url,
+    }));
+    console.log("Mapped categories:", mappedCategories);
+
     // Insert the categories into the database
-    const categories = await Category.insertMany(incomingCategories);
+    const categories = await Category.insertMany(mappedCategories);
     console.log("Saved categories:", categories);
 
     // Fetch the transformed products
@@ -28,47 +37,69 @@ db.once("open", async () => {
     console.log("Incoming products:", incomingProducts);
 
     // Check for products with null category
-    const productsWithNullCategory = incomingProducts.filter((product) => !product.category);
+    const productsWithNullCategory = incomingProducts.filter(
+      (product) => !product.category
+    );
     if (productsWithNullCategory.length > 0) {
       console.warn("Products with null category:", productsWithNullCategory);
     }
 
     // Process the incoming products
-    const processedProducts = incomingProducts.map((product) => {
-      try {
-        const matchedCategory = categories.find(
-          (c) => c.name.toLowerCase() === product.category.toLowerCase()
-        );
+    const processedProducts = incomingProducts
+      .map((product) => {
+        try {
+          if (!product.category) {
+            // If product has no category, assign category_id as null
+            console.log(`Product "${product.name}" has no category.`);
+            return {
+              name: product.name,
+              description: product.description,
+              thumbnail: product.thumbnail,
+              images: product.images,
+              price: product.price,
+              quantity: product.quantity,
+              category_id: null,
+            };
+          } else {
+            const matchedCategory = categories.find(
+              (c) => c.name.toLowerCase() === product.category.toLowerCase()
+            );
 
-        if (!matchedCategory) {
-          console.warn(`No matching category found for product: ${product.name}`);
-          return {
-            name: product.name,
-            description: product.description,
-            thumbnail: product.thumbnail,
-            images: product.images,
-            price: product.price,
-            quantity: product.quantity,
-            category_id: null,
-          };
+            if (!matchedCategory) {
+              console.warn(
+                `No matching category found for product: ${product.name}`
+              );
+              return {
+                name: product.name,
+                description: product.description,
+                thumbnail: product.thumbnail,
+                images: product.images,
+                price: product.price,
+                quantity: product.quantity,
+                category_id: null, // Assign null if no matching category found
+              };
+            }
+
+            console.log(
+              `Matched category for product ${product.name}: ${matchedCategory.name}`
+            );
+
+            return {
+              name: product.name,
+              description: product.description,
+              thumbnail: product.thumbnail,
+              images: product.images,
+              price: product.price,
+              quantity: product.quantity,
+              category_id: matchedCategory._id,
+            };
+          }
+        } catch (error) {
+          console.error("Error processing product:", product, error);
+          return null;
         }
-
-        console.log(`Matched category for product ${product.name}: ${matchedCategory.name}`);
-
-        return {
-          name: product.name,
-          description: product.description,
-          thumbnail: product.thumbnail,
-          images: product.images,
-          price: product.price,
-          quantity: product.quantity,
-          category_id: matchedCategory._id,
-        };
-      } catch (error) {
-        console.error("Error processing product:", product, error);
-        return null;
-      }
-    }).filter((product) => product !== null); // Filter out null products
+      })
+      .filter((product) => product !== null); // Filter out null products
 
     console.log("Processed products:", processedProducts);
 
