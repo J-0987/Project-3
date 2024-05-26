@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
@@ -10,9 +10,9 @@ import {
   ADD_TO_CART,
   UPDATE_PRODUCTS,
 } from '../utils/actions';
-import { QUERY_PRODUCTS } from '../utils/queries';
 import { idbPromise } from '../utils/helpers';
 import spinner from '../assets/spinner.gif';
+import { QUERY_PRODUCT } from '../utils/queries';
 
 function Detail() {
   const [state, dispatch] = useStoreContext();
@@ -20,31 +20,17 @@ function Detail() {
 
   const [currentProduct, setCurrentProduct] = useState({});
 
-  const { loading, data } = useQuery(QUERY_PRODUCTS);
+  const { loading, data } = useQuery(QUERY_PRODUCT, {
+    variables: { id: id },
+  });
 
-  const { products, cart } = state;
+  const { cart } = state;
 
   useEffect(() => {
-    if (products.length) {
-      setCurrentProduct(products.find((product) => product._id === id));
-    } else if (data) {
-      dispatch({
-        type: UPDATE_PRODUCTS,
-        products: data.products,
-      });
-
-      data.products.forEach((product) => {
-        idbPromise('products', 'put', product);
-      });
-    } else if (!loading) {
-      idbPromise('products', 'get').then((indexedProducts) => {
-        dispatch({
-          type: UPDATE_PRODUCTS,
-          products: indexedProducts,
-        });
-      });
+    if (data && data.product) {
+      setCurrentProduct(data.product);
     }
-  }, [products, data, loading, dispatch, id]);
+  }, [data]);
 
   const addToCart = () => {
     const itemInCart = cart.find((cartItem) => cartItem._id === id);
@@ -81,32 +67,48 @@ function Detail() {
 
   return (
     <>
-      {currentProduct && cart ? (
-        <div className="container my-1">
-          <Link to="/">← Back to Products</Link>
-
-          <h2>{currentProduct.name}</h2>
-
-          <p>{currentProduct.description}</p>
-
-          <p>
-            <strong>Price:</strong>${currentProduct.price}{' '}
-            <button onClick={addToCart}>Add to Cart</button>
-            <button
-              disabled={!cart.find((p) => p._id === currentProduct._id)}
-              onClick={removeFromCart}
-            >
-              Remove from Cart
-            </button>
-          </p>
-
-          <img
-            src={`/images/${currentProduct.image}`}
-            alt={currentProduct.name}
-          />
+      {loading ? (
+        <div className="flex items-center justify-center">
+          <img src={spinner} alt="loading" />
         </div>
-      ) : null}
-      {loading ? <img src={spinner} alt="loading" /> : null}
+      ) : (
+        <div className="container mx-auto p-4">
+          {currentProduct && (
+            <>
+              <Link to="/" className="block mb-4 text-blue-500">
+                ← Back to Products
+              </Link>
+              <h2 className="text-3xl font-bold mb-2">{currentProduct.name}</h2>
+              {currentProduct.images && currentProduct.images.length > 0 && (
+                <div className="flex justify-center mb-4">
+                  <img 
+                    src={currentProduct.images[0]}
+                    alt={currentProduct.name}
+                    className="w-16 h-16"
+                  />
+                </div>
+              )}
+              <p className="mb-4">{currentProduct.description}</p>
+              <p className="mb-4">
+                <strong className="mr-2">${currentProduct.price}</strong>
+                <button
+                  onClick={addToCart}
+                  className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                >
+                  Add to Cart
+                </button>
+                <button
+                  onClick={removeFromCart}
+                  disabled={!cart.find((p) => p._id === currentProduct._id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded"
+                >
+                  Remove from Cart
+                </button>
+              </p>
+            </>
+          )}
+        </div>
+      )}
       {/* <Cart /> */}
     </>
   );

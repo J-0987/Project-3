@@ -9,9 +9,7 @@ import spinner from '../../assets/spinner.gif';
 
 function ProductList() {
   const [state, dispatch] = useStoreContext();
-
   const { currentCategory } = state;
-
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
   useEffect(() => {
@@ -37,34 +35,29 @@ function ProductList() {
     if (!currentCategory) {
       return state.products;
     }
-
     return state.products.filter(
       (product) => product.category && product.category._id === currentCategory
     );
   }
 
   return (
-    <div className="my-2">
-      <h2>Our Products:</h2>
-      {state.products.length ? (
-        <div className="flex-row">
-          {filterProducts().map((product) => (
-            <ProductItem
-              key={product._id}
-              _id={product._id}
-              image={product.thumbnail} // Use 'thumbnail' instead of 'image'
-              name={product.name}
-              description={product.description} // Add 'description'
-              price={product.price}
-              quantity={product.quantity}
-              category={product.category ? product.category.name : ''} // Add 'category'
-            />
-          ))}
-        </div>
-      ) : (
-        <h3>You haven't added any products yet!</h3>
-      )}
-      {loading ? <img src={spinner} alt="loading" /> : null}
+    <div className="my-8">
+      <h2 className="text-2xl font-bold mb-4 text-center">Our Products:</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center">
+        {filterProducts().map((product) => (
+          <ProductItem
+            key={product._id}
+            _id={product._id}
+            image={product.thumbnail} // Use 'thumbnail' instead of 'image'
+            name={product.name}
+            description={product.description} // Add 'description'
+            price={product.price}
+            quantity={product.quantity}
+            category={product.category ? product.category.name : ''} // Add 'category'
+          />
+        ))}
+      </div>
+      {loading && <img src={spinner} alt="loading" className="mx-auto" />}
     </div>
   );
 }
