@@ -6,6 +6,8 @@ import { useQuery } from '@apollo/client';
 import { QUERY_PRODUCTS } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
 import spinner from '../../assets/spinner.gif';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
 function ProductList() {
   const [state, dispatch] = useStoreContext();
@@ -44,8 +46,28 @@ function ProductList() {
   }
 
   return (
+    <div>
+      
+  <Card style={{ width: '18rem' }}>
+      <Card.Img variant="top" src={product.thumbnail} />
+      <Card.Body>
+        <Card.Title>Card Title</Card.Title>
+        <Card.Text>
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content.
+        </Card.Text>
+        <Button variant="primary">Go somewhere</Button>
+      </Card.Body>
+    </Card>
+    </div>
+  )
+
+
+  return (
     <div className="my-2">
       <h2>Our Products:</h2>
+
+
       {state.products.length ? (
         <div className="flex-row">
           {filterProducts().map((product) => (
