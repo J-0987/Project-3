@@ -2,6 +2,8 @@ const typeDefs = `
 type Category {
   _id: ID
   name: String
+  slug: String
+  url: String
 }
 
 type Product {
@@ -50,7 +52,7 @@ input ProductInput {
 }
 
 type Query {
-  categories: [Category]
+  categories: [Category]  # Include the categories query
   products(category: ID, name: String): [Product]
   product(_id: ID!): Product
   user: User

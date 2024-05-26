@@ -12,7 +12,7 @@ import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import './style.css';
 
 // Initialize Stripe
-const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+const stripePromise = loadStripe('sk_test_51PKXrzRtKETGJw5Vi0XB8p4GLp0PCMpNkDpjJsGx3dJvqmzngh8KVjMxCr8BR92wREHA6ZEkiPekfIF4GdHIiY1K00Owwvz5qq');
 
 const Cart = () => {
   const [state, dispatch] = useStoreContext();

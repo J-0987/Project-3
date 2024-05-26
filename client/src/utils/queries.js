@@ -13,6 +13,8 @@ export const QUERY_PRODUCTS = gql`
       category_id {
         _id
         name
+        slug
+        url
       }
     }
   }
@@ -39,6 +41,8 @@ export const QUERY_ALL_PRODUCTS = gql`
       category_id {
         _id
         name
+        slug
+        url
       }
     }
   }
@@ -49,9 +53,12 @@ export const QUERY_CATEGORIES = gql`
     categories {
       _id
       name
+      slug
+      url
     }
   }
 `;
+
 
 export const QUERY_USER = gql`
   query getUser {
@@ -74,6 +81,8 @@ export const QUERY_USER = gql`
           category_id {
             _id
             name
+            slug
+            url
           }
         }
       }
@@ -94,6 +103,8 @@ export const QUERY_PRODUCT = gql`
       category_id {
         _id
         name
+        slug
+        url
       }
     }
   }
@@ -115,6 +126,8 @@ export const QUERY_ORDER = gql`
         category_id {
           _id
           name
+          slug
+          url
         }
       }
     }

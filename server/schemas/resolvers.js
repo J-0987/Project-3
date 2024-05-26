@@ -1,14 +1,19 @@
 const { User, Product, Category, Order } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const stripe = require('stripe')('sk_test_51PKXrzRtKETGJw5Vi0XB8p4GLp0PCMpNkDpjJsGx3dJvqmzngh8KVjMxCr8BR92wREHA6ZEkiPekfIF4GdHIiY1K00Owwvz5qq');
+const mongoose = require('mongoose');
 
 const resolvers = {
   Query: {
     categories: async () => {
       try {
         const categories = await Category.find();
-        console.log("Fetched categories:", categories);
-        return categories;
+        return categories.map(category => ({
+          _id: category._id,
+          name: category.name,
+          slug: category.slug,
+          url: category.url
+        }));
       } catch (error) {
         console.error("Error fetching categories:", error);
         throw error;
@@ -19,17 +24,23 @@ const resolvers = {
         const params = {};
 
         if (category) {
-          params.category_id = category;
+          const categoryObj = await Category.findOne({ name: category });
+          if (categoryObj) {
+            params.category_id = categoryObj._id;
+          } else {
+            console.error("Invalid category name:", category);
+            throw new Error('Invalid category name');
+          }
         }
 
         if (name) {
           params.name = {
             $regex: name,
+            $options: 'i',
           };
         }
 
         const products = await Product.find(params).populate('category_id');
-        console.log("Fetched products with params:", params, products);
         return products;
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -39,7 +50,6 @@ const resolvers = {
     product: async (parent, { _id }) => {
       try {
         const product = await Product.findById(_id).populate('category_id');
-        console.log("Fetched product by ID:", _id, product);
         return product;
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -56,7 +66,6 @@ const resolvers = {
 
           user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
-          console.log("Fetched user:", user);
           return user;
         }
         throw new AuthenticationError('Not authenticated');
@@ -74,7 +83,6 @@ const resolvers = {
           });
 
           const order = user.orders.id(_id);
-          console.log("Fetched order:", order);
           return order;
         }
         throw new AuthenticationError('Not authenticated');
@@ -98,7 +106,7 @@ const resolvers = {
                 description: product.description,
                 images: [`${url}/images/${product.thumbnail}`],
               },
-              unit_amount: Math.round(product.price * 100), // Convert price to cents to avoid this error - "message": "Invalid integer: 1998.9999999999998"
+              unit_amount: Math.round(product.price * 100),
             },
             quantity: product.purchaseQuantity,
           });
@@ -112,7 +120,6 @@ const resolvers = {
           cancel_url: `${url}/`,
         });
 
-        console.log("Created checkout session:", session.id);
         return { session: session.id };
       } catch (error) {
         console.error("Error creating checkout session:", error);
