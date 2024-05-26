@@ -59,8 +59,8 @@ function Navigation() {
 
   return (
     <div>
-<FontAwesomeIcon icon={faCartShopping} />
-      <Cart />
+{/* <FontAwesomeIcon icon={faCartShopping} /> */}
+    
       <Navbar expand="lg" className="bg-body-tertiary nav-container">
         <Container >
 
@@ -91,6 +91,7 @@ function Navigation() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      <Cart />
     </div>
 
   )
