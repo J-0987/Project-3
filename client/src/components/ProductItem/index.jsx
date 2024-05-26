@@ -1,50 +1,58 @@
 import { Link } from "react-router-dom";
-import { pluralize } from "../../utils/helpers"
+import { pluralize } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 
 function ProductItem({ _id, image, name, price, quantity, category, description, images }) {
   const [state, dispatch] = useStoreContext();
-
-  const { cart } = state
+  const { cart } = state;
 
   const addToCart = () => {
-    const itemInCart = cart.find((cartItem) => cartItem._id === _id)
+    const itemInCart = cart.find((cartItem) => cartItem._id === _id);
     if (itemInCart) {
       dispatch({
         type: UPDATE_CART_QUANTITY,
         _id: _id,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
       });
       idbPromise('cart', 'put', {
         ...itemInCart,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
       });
     } else {
       dispatch({
         type: ADD_TO_CART,
-        product: { _id, image, name, price, quantity, category, description, images, purchaseQuantity: 1 }
+        product: { _id, image, name, price, quantity, category, description, images, purchaseQuantity: 1 },
       });
       idbPromise('cart', 'put', { _id, image, name, price, quantity, category, description, images, purchaseQuantity: 1 });
     }
-  }
+  };
 
   return (
-    <div className="card px-1 py-1">
+    <div className="card max-w-xs bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
       <Link to={`/products/${_id}`}>
         <img
           alt={name}
           src={image}
+          className="w-full h-48 object-cover rounded-t-lg"
         />
-        <p>{name}</p>
+        <div className="p-4">
+          <h4 className="font-bold text-lg mb-2">{name}</h4>
+          <p className="text-gray-500 mb-2">{category}</p>
+          <p className="text-gray-700 mb-4">{description}</p>
+          <div className="flex justify-between items-center">
+            <div>{quantity} {pluralize("item", quantity)} in stock</div>
+            <span className="font-bold text-lg">${price}</span>
+          </div>
+        </div>
       </Link>
-      <div>
-    
-        <div>{quantity} {pluralize("item", quantity)} in stock</div>
-        <span>${price}</span>
-      </div>
-      <button onClick={addToCart}>Add to cart</button>
+      <button
+        onClick={addToCart}
+        className="w-full bg-blue-500 text-white py-2 px-4 rounded-b-lg hover:bg-blue-600 transition duration-200"
+      >
+        Add to cart
+      </button>
     </div>
   );
 }

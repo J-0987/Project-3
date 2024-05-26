@@ -1,6 +1,6 @@
 const { User, Product, Category, Order } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
-const stripe = require('stripe')('sk_test_51PKXrzRtKETGJw5Vi0XB8p4GLp0PCMpNkDpjJsGx3dJvqmzngh8KVjMxCr8BR92wREHA6ZEkiPekfIF4GdHIiY1K00Owwvz5qq');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const mongoose = require('mongoose');
 
 const resolvers = {

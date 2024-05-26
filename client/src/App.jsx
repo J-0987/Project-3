@@ -1,4 +1,3 @@
-
 import { Outlet } from 'react-router-dom';
 // import 'semantic-ui-css/semantic.min.css';
 import './index.css';
@@ -38,12 +37,13 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div>
+      <div className="flex flex-col min-h-screen">
         <StoreProvider>
           <Nav />
-          <Outlet />
+          <main className="flex-grow">
+            <Outlet />
+          </main>
           <Footer />
-
         </StoreProvider>
       </div>
     </ApolloProvider>
