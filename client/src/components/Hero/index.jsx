@@ -70,7 +70,10 @@ function Hero() {
     
         <Col xs={6} md={4} className=''>
           <Image src={perfume} roundedCircle  />
+          <Link>
           <p>Fragrances</p>
+          </Link>
+       
         </Col>
         <Col xs={6} md={4}>
           <Image src={beauty}roundedCircle />
