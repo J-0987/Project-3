@@ -68,39 +68,41 @@ function Detail() {
   return (
     <>
       {loading ? (
-        <div className="flex items-center justify-center">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
           <img src={spinner} alt="loading" />
         </div>
       ) : (
-        <div className="container mx-auto p-4">
+        <div style={{ margin: '0 auto', padding: '16px', maxWidth: '800px' }}>
           {currentProduct && (
             <>
-              <Link to="/" className="block mb-4 text-blue-500">
+              <Link to="/" style={{ display: 'block', marginBottom: '16px', color: '#3b82f6' }}>
                 ← Back to Products
               </Link>
-              <h2 className="text-3xl font-bold mb-2">{currentProduct.name}</h2>
+              <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '8px' }}>{currentProduct.name}</h2>
               {currentProduct.images && currentProduct.images.length > 0 && (
-                <div className="flex justify-center mb-4">
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
                   <img 
                     src={currentProduct.images[0]}
                     alt={currentProduct.name}
-                    className="w-16 h-16"
+                    style={{ width: '460px', height: '460px', objectFit: 'contain' }}
                   />
                 </div>
               )}
-              <p className="mb-4">{currentProduct.description}</p>
-              <p className="mb-4">
-                <strong className="mr-2">${currentProduct.price}</strong>
+              <p style={{ marginBottom: '16px' }}>{currentProduct.description}</p>
+              <p style={{ marginBottom: '16px' }}>
+                <strong style={{ marginRight: '8px' }}>PRICE: ${currentProduct.price}</strong>
+                <br />
+                <br />
                 <button
                   onClick={addToCart}
-                  className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                  style={{ backgroundColor: '#3b82f6', color: '#fff', padding: '8px 16px', borderRadius: '4px', marginRight: '8px' }}
                 >
                   Add to Cart
                 </button>
                 <button
                   onClick={removeFromCart}
                   disabled={!cart.find((p) => p._id === currentProduct._id)}
-                  className="bg-red-500 text-white px-4 py-2 rounded"
+                  style={{ backgroundColor: '#ef4444', color: '#fff', padding: '8px 16px', borderRadius: '4px' }}
                 >
                   Remove from Cart
                 </button>
