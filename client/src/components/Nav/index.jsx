@@ -7,16 +7,12 @@ import "./index.css";
 import { Link } from "react-router-dom";
 import Cart from "../Cart";
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+
 
 function Navigation() {
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
 
   const categories = [
     "Beauty",
@@ -62,7 +58,7 @@ function Navigation() {
   }
 
   return (
-    <div>
+    <div className="nav-bar">
       <Navbar expand="lg" className="bg-body-tertiary nav-container">
         <Container>
           <Navbar.Brand as={Link} to="/">
