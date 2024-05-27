@@ -36,13 +36,15 @@ function Navigation() {
     if (Auth.loggedIn()) {
       return (
         <div className="nav-links">
+
+          <Nav.Link as={Link} to="/orderHistory" style={{ whiteSpace: 'nowrap', fontWeight:' 500'}}>
+            My Account
+          </Nav.Link>
           <Nav.Link as={Link} to="/" onClick={() => Auth.logout()}>
             Logout
           </Nav.Link>
 
-          <Nav.Link as={Link} to="/orderHistory">
-            My Account
-          </Nav.Link>
+
         </div>
       );
     } else {
@@ -69,8 +71,7 @@ function Navigation() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              {/* <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#link">Link</Nav.Link> */}
+         
               <NavDropdown
                 className="full-width-dropdown"
                 title="Categories"

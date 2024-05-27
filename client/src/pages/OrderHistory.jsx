@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
-import  HeaderStyle, {TitleStyle} from'../components/assets/styled-components/header'
+import  HeaderStyle, {TitleStyle} from'../components/assets/styled-components/header';
+
 
 function OrderHistory() {
   const { loading, data } = useQuery(QUERY_USER);

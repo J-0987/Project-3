@@ -11,8 +11,10 @@
 
 .nav-links {
   display: flex;
-  justify-content: space-evenly; /* Optional: Add some space between the links */
+  justify-content: space-between; /* Optional: Add some space between the links */
   width: 70%;
+  column-gap: 20%;
+ margin-right: 50px;
 }
 
 .navbar .cart-icon {
