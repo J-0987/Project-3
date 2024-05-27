@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import { useLazyQuery } from '@apollo/client';
-import { QUERY_CHECKOUT } from '../../utils/queries';
-import { idbPromise } from '../../utils/helpers';
-import CartItem from '../CartItem';
-import Auth from '../../utils/auth';
-import { useStoreContext } from '../../utils/GlobalState';
-import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { useLazyQuery } from "@apollo/client";
+import { QUERY_CHECKOUT } from "../../utils/queries";
+import { idbPromise } from "../../utils/helpers";
+import CartItem from "../CartItem";
+import Auth from "../../utils/auth";
+import { useStoreContext } from "../../utils/GlobalState";
+import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from "../../utils/actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import { Link } from "react-router-dom";
 
 // Initialize Stripe
-const stripePromise = loadStripe('pk_test_51PKXrzRtKETGJw5VRsP0ypWaHSYpKiPB4To1NDLfVG0C4zHFBh3CtaoTJGAHcmYauN1YhQ7M57huU50pKW3aPPep00AlVsOfMB');
+const stripePromise = loadStripe(
+  "pk_test_51PKXrzRtKETGJw5VRsP0ypWaHSYpKiPB4To1NDLfVG0C4zHFBh3CtaoTJGAHcmYauN1YhQ7M57huU50pKW3aPPep00AlVsOfMB"
+);
 
 const Cart = () => {
   const [state, dispatch] = useStoreContext();
@@ -26,32 +28,35 @@ const Cart = () => {
 
   useEffect(() => {
     if (error) {
-      console.error('Error fetching checkout session:', error);
+      console.error("Error fetching checkout session:", error);
     }
   }, [error]);
 
   useEffect(() => {
     if (data) {
-      stripePromise.then((res) => {
-        res.redirectToCheckout({ sessionId: data.checkout.session })
-          .then(result => {
-            if (result.error) {
-              console.error('Error redirecting to checkout:', result.error);
-            }
-          });
-      }).catch(err => {
-        console.error('Error loading Stripe:', err);
-      });
+      stripePromise
+        .then((res) => {
+          res
+            .redirectToCheckout({ sessionId: data.checkout.session })
+            .then((result) => {
+              if (result.error) {
+                console.error("Error redirecting to checkout:", result.error);
+              }
+            });
+        })
+        .catch((err) => {
+          console.error("Error loading Stripe:", err);
+        });
     }
   }, [data]);
 
   useEffect(() => {
     async function getCart() {
       try {
-        const cart = await idbPromise('cart', 'get');
+        const cart = await idbPromise("cart", "get");
         dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
       } catch (err) {
-        console.error('Error getting cart from IndexedDB:', err);
+        console.error("Error getting cart from IndexedDB:", err);
       }
     }
 
@@ -71,7 +76,16 @@ const Cart = () => {
   function submitCheckout() {
     getCheckout({
       variables: {
-        products: [...state.cart],
+        products: state.cart.map(
+          ({ _id, name, description, thumbnail, price, purchaseQuantity }) => ({
+            _id,
+            name,
+            description,
+            image: thumbnail,
+            price,
+            purchaseQuantity,
+          })
+        ),
       },
     });
   }
@@ -96,18 +110,22 @@ const Cart = () => {
               <div className="flex-row space-between">
                 <strong>Total: ${calculateTotal()}</strong>
 
-                {Auth.loggedIn() ? (                  
-                  <Button variant="primary" onClick={submitCheckout} disabled={loading}>
-                    {loading ? 'Loading...' : 'Checkout'}
+                {Auth.loggedIn() ? (
+                  <Button
+                    variant="primary"
+                    onClick={submitCheckout}
+                    disabled={loading}
+                  >
+                    {loading ? "Loading..." : "Checkout"}
                   </Button>
                 ) : (
                   <span>
-                  <br/>
-                  Please 
+                    <br />
+                    Please
                     <Link to="/login" className="block mx-2 mb-4 text-blue-500">
                       Login
                     </Link>
-                  in to check out
+                    in to check out
                   </span>
                 )}
               </div>

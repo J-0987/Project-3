@@ -3,7 +3,6 @@ import { REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 
 const CartItem = ({ item }) => {
-
   const [, dispatch] = useStoreContext();
 
   const removeFromCart = item => {
@@ -12,7 +11,6 @@ const CartItem = ({ item }) => {
       _id: item._id
     });
     idbPromise('cart', 'delete', { ...item });
-
   };
 
   const onChange = (e) => {
@@ -23,7 +21,6 @@ const CartItem = ({ item }) => {
         _id: item._id
       });
       idbPromise('cart', 'delete', { ...item });
-
     } else {
       dispatch({
         type: UPDATE_CART_QUANTITY,
@@ -31,16 +28,16 @@ const CartItem = ({ item }) => {
         purchaseQuantity: parseInt(value)
       });
       idbPromise('cart', 'put', { ...item, purchaseQuantity: parseInt(value) });
-
     }
-  }
+  };
 
   return (
     <div className="flex-row">
       <div>
         <img
-          src={`/images/${item.image}`}
-          alt=""
+          src={item.image[0]}
+          alt={item.name}
+          style={{ width: '100px', height: '100px' }}
         />
       </div>
       <div>
@@ -52,11 +49,13 @@ const CartItem = ({ item }) => {
             placeholder="1"
             value={item.purchaseQuantity}
             onChange={onChange}
+            min="0"
           />
           <span
             role="img"
             aria-label="trash"
             onClick={() => removeFromCart(item)}
+            style={{ cursor: 'pointer', marginLeft: '10px' }}
           >
             🗑️
           </span>
