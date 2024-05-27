@@ -5,6 +5,7 @@ import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 
 function ProductItem({ _id, image, name, price, quantity, category, description, images }) {
+  console.log("images",images,"name",name,"image",image)
   const [state, dispatch] = useStoreContext();
 
   const { cart } = state
@@ -33,14 +34,14 @@ function ProductItem({ _id, image, name, price, quantity, category, description,
   return (
     <div className="card px-1 py-1">
       <Link to={`/products/${_id}`}>
-        <img
-          alt={name}
-          src={image}
+
+        <img src={"/images/" + name}
+          alt={"/images/" + name}
         />
         <p>{name}</p>
       </Link>
       <div>
-    
+
         <div>{quantity} {pluralize("item", quantity)} in stock</div>
         <span>${price}</span>
       </div>

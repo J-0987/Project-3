@@ -44,63 +44,33 @@ function ProductList() {
       (product) => product.category && product.category._id === currentCategory
     );
   }
-
+  console.log(state.products)
   return (
     <div className="my-2">
-
-<h2>Our Products:</h2>
-
-{state.products.length ? (
-  <div className="flex-row">
-    {filterProducts().map((product) => (
-      <Card className="card" style={{ width: '18rem' }} key={product._id}>
-        <Card.Img variant="top" src={product.thumbnail} />
-        <Card.Body>
-          <Card.Title>{product.name}</Card.Title>
-          <Card.Text>
-            {product.description}
-          </Card.Text>
-          <Card.Text>
-            Price: ${product.price}
-          </Card.Text>
-
-          <Button variant="primary">Go somewhere</Button>
-        </Card.Body>
-      </Card>
-    ))}
-  </div>
-) : (
-  <h3>You haven't added any products yet!</h3>
-)}
+      <h2>Our Products:</h2>
 
 
-</div>
-  )
-
+      {state.products.length ? (
+        <div className="flex-row">
+          {filterProducts().map((product) => (
+            <ProductItem
+              key={product._id}
+              _id={product._id}
+              image={product.image} // Use 'thumbnail' instead of 'image'
+              name={product.name}
+              description={product.description} // Add 'description'
+              price={product.price}
+              quantity={product.quantity}
+              category={product.category ? product.category.name : ''} // Add 'category'
+            />
+          ))}
+        </div>
+      ) : (
+        <h3>You haven't added any products yet!</h3>
+      )}
+      {loading ? <img src={spinner} alt="loading" /> : null}
+    </div>
+  );
 }
 
 export default ProductList;
-
-/*
-
-{state.products.length ? (
-  <div className="flex-row">
-    {filterProducts().map((product) => (
-      <ProductItem
-        key={product._id}
-        _id={product._id}
-        image={product.thumbnail} // Use 'thumbnail' instead of 'image'
-        name={product.name}
-        description={product.description} // Add 'description'
-        price={product.price}
-        quantity={product.quantity}
-        category={product.category ? product.category.name : ''} // Add 'category'
-      />
-    ))}
-  </div>
-) : (
-  <h3>You haven't added any products yet!</h3>
-)}
-{loading ? <img src={spinner} alt="loading" /> : null}
-
-*/

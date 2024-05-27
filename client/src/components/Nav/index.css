@@ -1,6 +1,6 @@
 .full-width-dropdown .dropdown-menu {
     width: 100vw; /* Full width */
-    height: 50vh; /* Half height */
+    height: 80vh; /* Half height */
     position: fixed; /* Make it cover the full width */
     left: 0; /* Align it to the left */
     top: 60px; /* Adjust this value to position it correctly vertically */
@@ -13,3 +13,12 @@
     justify-content: space-between; /* Optional: Add some space between the links */
     
   }
+
+.button {
+  width: 100%;
+  color: pink;
+  background-color: #541616;
+  border: none;
+  margin-top: 5%;
+  height: 10vh;
+}

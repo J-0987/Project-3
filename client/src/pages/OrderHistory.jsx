@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
+import Button from 'react-bootstrap/Button';
 
 function OrderHistory() {
   const { loading, data } = useQuery(QUERY_USER);
@@ -15,12 +16,19 @@ function OrderHistory() {
   return (
     <>
       <div className="container my-1">
-        <Link to="/">← Main Page</Link>
+        <Link to="/">
+        <Button className='gotoLogin' type="submit">
+        Back
+      </Button>
+        
+        </Link>
 
         {user ? (
           <>
             <h2>
-              Order History for {user.firstName} {user.lastName}
+              {/* Order History for {user.firstName} {user.lastName} */}
+
+              Your Order History
             </h2>
             {user.orders.map((order) => (
               <div key={order._id} className="my-2">

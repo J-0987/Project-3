@@ -5,6 +5,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import heroImg from '../assets/hero.jpg'
 import heroImg2 from '../assets/hero2.jpg'
 import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 
 
 
@@ -40,7 +41,12 @@ function Hero() {
 
     <Link to='/products'>
 
-     <button>SHOP NOW</button>
+    <div className="d-grid gap-2">
+      <Button className='button' size="lg">
+    SHOP NOW
+      </Button>
+     
+    </div>
      </Link>
 
 
