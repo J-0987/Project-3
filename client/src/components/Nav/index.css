@@ -11,7 +11,7 @@
 
 .nav-links {
   display: flex;
-  justify-content: space-between; /* Optional: Add some space between the links */
+  justify-content: space-evenly; /* Optional: Add some space between the links */
   width: 70%;
 }
 
