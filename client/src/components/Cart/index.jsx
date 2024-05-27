@@ -11,12 +11,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import { ModalTitle, CaItem } from './styles';
 
 // Initialize Stripe
 const stripePromise = loadStripe(
   "pk_test_51PKXrzRtKETGJw5VRsP0ypWaHSYpKiPB4To1NDLfVG0C4zHFBh3CtaoTJGAHcmYauN1YhQ7M57huU50pKW3aPPep00AlVsOfMB"
 );
+
 
 const Cart = () => {
   const [state, dispatch] = useStoreContext();
@@ -72,7 +75,11 @@ const Cart = () => {
     });
     return sum.toFixed(2);
   }
-
+  const navigate = useNavigate();
+  function toLogin() {
+    navigate('/login')
+    handleClose();
+  }
   function submitCheckout() {
     getCheckout({
       variables: {
@@ -92,13 +99,13 @@ const Cart = () => {
 
   return (
     <>
-      <Button className="cart-JJ" onClick={handleShow}>
+      <Button className="bg-cyan-500 hover:bg-cyan-600 cart-JJ" onClick={handleShow}>
         <FontAwesomeIcon icon={faCartShopping} />
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>My Cart</Modal.Title>
+          <Modal.Title >My Cart</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {state.cart.length ? (
@@ -107,42 +114,47 @@ const Cart = () => {
                 <CartItem key={item._id} item={item} />
               ))}
 
-              <div className="flex-row space-between">
-                <strong>Total: ${calculateTotal()}</strong>
 
-                {Auth.loggedIn() ? (
-                  <Button
-                    variant="primary"
-                    onClick={submitCheckout}
-                    disabled={loading}
-                  >
-                    {loading ? "Loading..." : "Checkout"}
-                  </Button>
-                ) : (
-                  <span>
-                    <br />
-                    Please
-                    <Link to="/login" className="block mx-2 mb-4 text-blue-500">
-                      Login
-                    </Link>
-                    in to check out
-                  </span>
-                )}
-              </div>
             </div>
           ) : (
             <h3>
-              <span role="img" aria-label="shocked">
-                😱
-              </span>
+           
               You haven't added anything to your cart yet!
             </h3>
           )}
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="footer">
+          <div >
+            <strong>Total: ${calculateTotal()}</strong>
+
+
+          </div>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
+          {Auth.loggedIn() ? (
+            <Button
+              variant="primary"
+              onClick={submitCheckout}
+              disabled={loading}
+            >
+              {loading ? "Loading..." : "Checkout"}
+            </Button>
+          ) : (
+            <div>
+              {/* <Link  to="/login" >  */}
+              <Button
+                variant="primary"
+                onClick={toLogin}
+                disabled={loading}
+              >
+                {loading ? "Loading..." : "Login to checkout"}
+              </Button>
+
+            
+            </div>
+
+          )}
         </Modal.Footer>
       </Modal>
     </>

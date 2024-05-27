@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const HeaderStyle = styled.header`
 font-size: 4rem;
-  font-weight: 600;
+  font-weight: 400;
   color: black;
   text-transform: uppercase;
   display:flex;
