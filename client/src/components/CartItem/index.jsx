@@ -34,11 +34,17 @@ const CartItem = ({ item }) => {
   return (
     <div className="flex-row">
       <div>
-        <img
-          src={item.image[0]}
-          alt={item.name}
-          style={{ width: '100px', height: '100px' }}
-        />
+        {item.image && item.image.length > 0 ? (
+          <img
+            src={item.image}
+            alt={item.name}
+            style={{ width: '100px', height: '100px' }}
+          />
+        ) : (
+          <div style={{ width: '100px', height: '100px', backgroundColor: '#ccc' }}>
+            No Image
+          </div>
+        )}
       </div>
       <div>
         <div>{item.name}, ${item.price}</div>

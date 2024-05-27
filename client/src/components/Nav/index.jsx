@@ -3,7 +3,6 @@ import Nav from "react-bootstrap/Nav";
 import Auth from "../../utils/auth";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import logo from "../assets/logo.png";
 import "./index.css";
 import { Link } from "react-router-dom";
 import Cart from "../Cart";

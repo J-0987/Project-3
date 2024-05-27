@@ -21,6 +21,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "styled-components": "^6.1.11"
+    "styled-components": "^6.1.11",
+    "mongodb": "^6.6.2"
   }
 }
