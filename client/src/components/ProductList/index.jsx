@@ -43,21 +43,26 @@ function ProductList() {
   return (
     <div className="my-8">
       <h2 className="text-2xl font-bold mb-4 text-center">Our Products:</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center">
-        {filterProducts().map((product) => (
-          <ProductItem
-            key={product._id}
-            _id={product._id}
-            image={product.thumbnail} // Use 'thumbnail' instead of 'image'
-            name={product.name}
-            description={product.description} // Add 'description'
-            price={product.price}
-            quantity={product.quantity}
-            category={product.category ? product.category.name : ''} // Add 'category'
-          />
-        ))}
-      </div>
-      {loading && <img src={spinner} alt="loading" className="mx-auto" />}
+      {loading ? (
+        <div className="flex justify-center">
+          <img src={spinner} alt="loading" className="w-16 h-16" />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {filterProducts().map((product) => (
+            <ProductItem
+              key={product._id}
+              _id={product._id}
+              image={product.thumbnail} // Use 'thumbnail' instead of 'image'
+              name={product.name}
+              description={product.description} // Add 'description'
+              price={product.price}
+              quantity={product.quantity}
+              category={product.category ? product.category.name : ''} // Add 'category'
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

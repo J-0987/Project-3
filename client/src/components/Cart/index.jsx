@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { Link } from 'react-router-dom';
 
 // Initialize Stripe
 const stripePromise = loadStripe('pk_test_51PKXrzRtKETGJw5VRsP0ypWaHSYpKiPB4To1NDLfVG0C4zHFBh3CtaoTJGAHcmYauN1YhQ7M57huU50pKW3aPPep00AlVsOfMB');
@@ -95,12 +96,19 @@ const Cart = () => {
               <div className="flex-row space-between">
                 <strong>Total: ${calculateTotal()}</strong>
 
-                {Auth.loggedIn() ? (
+                {Auth.loggedIn() ? (                  
                   <Button variant="primary" onClick={submitCheckout} disabled={loading}>
                     {loading ? 'Loading...' : 'Checkout'}
                   </Button>
                 ) : (
-                  <span>(log in to check out)</span>
+                  <span>
+                  <br/>
+                  Please 
+                    <Link to="/login" className="block mx-2 mb-4 text-blue-500">
+                      Login
+                    </Link>
+                  in to check out
+                  </span>
                 )}
               </div>
             </div>

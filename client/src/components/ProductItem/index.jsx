@@ -8,8 +8,9 @@ function ProductItem({ _id, image, name, price, quantity, category, description,
   const [state, dispatch] = useStoreContext();
   const { cart } = state;
 
+  const itemInCart = cart.find((cartItem) => cartItem._id === _id);
+
   const addToCart = () => {
-    const itemInCart = cart.find((cartItem) => cartItem._id === _id);
     if (itemInCart) {
       dispatch({
         type: UPDATE_CART_QUANTITY,
@@ -30,7 +31,7 @@ function ProductItem({ _id, image, name, price, quantity, category, description,
   };
 
   return (
-    <div className="card max-w-xs bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+    <div className="card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
       <Link to={`/products/${_id}`}>
         <img
           alt={name}
@@ -42,7 +43,7 @@ function ProductItem({ _id, image, name, price, quantity, category, description,
           <p className="text-gray-500 mb-2">{category}</p>
           <p className="text-gray-700 mb-4">{description}</p>
           <div className="flex justify-between items-center">
-            <div>{quantity} {pluralize("item", quantity)} in stock</div>
+            <div>{quantity - (itemInCart ? itemInCart.purchaseQuantity : 0)} {pluralize("item", quantity)} in stock</div>
             <span className="font-bold text-lg">${price}</span>
           </div>
         </div>
@@ -51,7 +52,7 @@ function ProductItem({ _id, image, name, price, quantity, category, description,
         onClick={addToCart}
         className="w-full bg-blue-500 text-white py-2 px-4 rounded-b-lg hover:bg-blue-600 transition duration-200"
       >
-        Add to cart
+        {itemInCart ? 'Add One More' : 'Add to Cart'}
       </button>
     </div>
   );
