@@ -28,12 +28,15 @@ function Detail() {
 
   useEffect(() => {
     if (data && data.product) {
-      setCurrentProduct(data.product);
+      setCurrentProduct(data.product);      
     }
   }, [data]);
 
+  const itemInCart = cart.find((cartItem) => cartItem._id === id);
+
   const addToCart = () => {
-    const itemInCart = cart.find((cartItem) => cartItem._id === id);
+    console.log(currentProduct);
+
     if (itemInCart) {
       dispatch({
         type: UPDATE_CART_QUANTITY,
@@ -45,14 +48,22 @@ function Detail() {
         purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
       });
     } else {
+
+      const product = {
+        _id: currentProduct._id, 
+        image: currentProduct.images[0], 
+        name: currentProduct.name, 
+        price: currentProduct.price, 
+        quantity: currentProduct.quantity, 
+        category: currentProduct.category, 
+        description: currentProduct.description, 
+        images: currentProduct.images,
+        purchaseQuantity: 1,
+      }
       dispatch({
         type: ADD_TO_CART,
-        product: { ...currentProduct, purchaseQuantity: 1 },
-      });
-      idbPromise('cart', 'put', {
-        ...currentProduct,
-        purchaseQuantity: 1,
-      });
+        product: product });
+      idbPromise('cart', 'put', product);
     }
   };
 
@@ -111,7 +122,6 @@ function Detail() {
           )}
         </div>
       )}
-      {/* <Cart /> */}
     </>
   );
 }

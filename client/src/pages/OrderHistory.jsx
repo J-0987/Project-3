@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { QUERY_USER } from '../utils/queries';
-import  HeaderStyle, {TitleStyle} from'../components/assets/styled-components/header';
-
+import { Link } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { QUERY_USER } from "../utils/queries";
+import HeaderStyle, {
+  TitleStyle,
+} from "../components/assets/styled-components/header";
 
 function OrderHistory() {
   const { loading, data } = useQuery(QUERY_USER);
@@ -20,11 +21,12 @@ function OrderHistory() {
 
         {user ? (
           <>
-            
-            <HeaderStyle>  My Account </HeaderStyle>
-          <TitleStyle>  Order History for   {user.firstName} {user.lastName}   </TitleStyle> 
+            <HeaderStyle> My Account </HeaderStyle>
+            <TitleStyle>
+              {" "}
+              Order History for {user.firstName} {user.lastName}{" "}
+            </TitleStyle>
 
-        
             {user.orders.map((order) => (
               <div key={order._id} className="my-2">
                 <h3>
@@ -34,7 +36,7 @@ function OrderHistory() {
                   {order.products.map(({ _id, thumbnail, name, price }) => (
                     <div key={_id} className="card px-1 py-1">
                       <Link to={`/products/${_id}`}>
-                        <img alt={name} src={`/images/${thumbnail}`} />
+                        <img alt={name} src={thumbnail} />
                         <p>{name}</p>
                       </Link>
                       <div>

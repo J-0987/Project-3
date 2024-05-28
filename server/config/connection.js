@@ -15,9 +15,8 @@ const logger = winston.createLogger({
 });
 
 // MongoDB Atlas connection URI
-
-const uri = process.env.MONGODB_URI  || 'mongodb+srv://jj:password1234@cluster0.ki724eh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-
+// const uri = process.env.MONGODB_URI  || 'mongodb+srv://peensbryan75:ywJluiPTlvhOv8yc@cluster0.ki724eh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const uri = process.env.MONGODB_URI  || 'mongodb+srv://peensbryan75:iJYCul8pAQzW3oPX@cluster0.f7qan0a.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 mongoose.connect(uri, {
   useNewUrlParser: true,
