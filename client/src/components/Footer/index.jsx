@@ -14,6 +14,11 @@ const Footer = () => {
                             <p>About The Shop</p>
                         </Link>
                     </div>
+                    <div className="text-center py-3 md:py-0">
+                        <Link to="/contact" className="text-blue-500 hover:underline">
+                            <p>Contact Us</p>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </footer>
