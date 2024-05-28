@@ -61,33 +61,33 @@ export const QUERY_CATEGORIES = gql`
 
 
 export const QUERY_USER = gql`
-  query getUser {
-    user {
+query getUser {
+  user {
+    _id
+    firstName
+    lastName
+    email
+    orders {
       _id
-      firstName
-      lastName
-      email
-      orders {
+      purchaseDate
+      products {
         _id
-        purchaseDate
-        products {
+        name
+        description
+        thumbnail
+        images
+        quantity
+        price
+        category_id {
           _id
           name
-          description
-          thumbnail
-          images
-          quantity
-          price
-          category_id {
-            _id
-            name
-            slug
-            url
-          }
+          slug
+          url
         }
       }
     }
   }
+}
 `;
 
 export const QUERY_PRODUCT = gql`
