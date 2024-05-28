@@ -41,8 +41,14 @@ function CategoryPage() {
 
   return (
     <div className="container mx-auto px-4">
-      <Link to={`/products`}>Back To Products</Link>
-      <h1 className="text-2xl font-bold text-center my-8">{categoryName} Products</h1>
+   
+
+      <Link to='/products'>
+          <button className="bg-cyan-500 hover:bg-cyan-600  text-white font-bold py-2 px-4 rounded">
+           All Products
+          </button>
+        </Link>
+      <h1 className="text-2xl font-bold text-center my-8">{categoryName} </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {data.products.map((item) => (
           <ProductItem

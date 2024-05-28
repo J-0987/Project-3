@@ -4,6 +4,7 @@ import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 
+
 function ProductItem({ _id, image, name, price, quantity, category, description, images }) {
   const [state, dispatch] = useStoreContext();
   const { cart } = state;
@@ -31,7 +32,7 @@ function ProductItem({ _id, image, name, price, quantity, category, description,
   };
 
   return (
-    <div className="card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+    <div className="card bg-sky-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
       <Link to={`/products/${_id}`}>
         <img
           alt={name}
@@ -50,7 +51,7 @@ function ProductItem({ _id, image, name, price, quantity, category, description,
       </Link>
       <button
         onClick={addToCart}
-        className="w-full bg-blue-500 text-white py-2 px-4 rounded-b-lg hover:bg-blue-600 transition duration-200"
+        className="w-full bg-cyan-500 hover:bg-cyan-600  text-white py-2 px-4 rounded-b-lg transition duration-200"
       >
         {itemInCart ? 'Add One More' : 'Add to Cart'}
       </button>
