@@ -99,7 +99,7 @@ const About = () => {
             <div className="bg-slate-100 pl-8 py-4">
               <p className="flex items-center text-indigo-600 cursor-pointer">
                 <Link to="/contact" className="text-blue-500 hover:underline">
-                  <p>Get In Toutch</p>
+                  <p>Get In Touch</p>
                 </Link>
                 <ArrowSmallRightIcon className="w-5 ml-2" />
               </p>

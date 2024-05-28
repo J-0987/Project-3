@@ -1,19 +1,77 @@
-# E-Commerce Application
+# The SHOP
 
 ## Description
-The E-Commerce Application is a full-stack web application that provides a platform for users to browse products, add items to their cart, and make purchases. It features a robust backend with a MongoDB Atlas database and a React frontend, ensuring a seamless shopping experience.
+The SHOP is a full-stack e-commerce application web application that provides a platform for users to browse products, add items to their cart, and make purchases. It features a robust backend with a MongoDB Atlas database and a React frontend, ensuring a seamless shopping experience.
 
 ## Links
 - [GitHub Repository](https://github.com/J-0987/Project-3)
 - [Live Link](https://project-3-v9eb.onrender.com/)
 
 ## Table of Contents
+- [Features](#features)
+- [Technology](#technology)
+- [Preview](#preview)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [Tests](#tests)
 - [Questions](#questions)
 - [License](#license)
+
+
+## Features
+Key features of the application include user authentication, shopping cart functionality, search by product category and secure payment processing. The application is designed with a mobile-first approach, ensuring a convenient shopping experience across all devices.
+
+## Technology
+The application leverages **React.js** to deliver a fast, single-page application with real-time updates, ensuring as smooth and responsive user interface. **Context API** is applied to align with best practices, The backend is built with **Node.js and Express.js**, providing scalable infrastructure. Data is stored in a **MongoDB database**, ensuring efficient data retrieval and storage.
+
+This project also relied on the following technologies:
+
+- Stripe for payment processing 
+- Tailwind CSS
+- Bootstrap React
+- Styled Components
+- Render
+- bcrypt
+- Apollo
+- jsonwebtoken
+- nodemon
+
+
+## Preview
+
+**Landing Page View**
+
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+
+**Products Page View**
+
+![alt text](image-2.png)
+
+![alt text](image-3.png)
+
+![alt text](image-4.png)
+
+**Create Account and Login Views**
+
+![alt text](image-6.png)
+
+![alt text](image-7.png)
+
+
+**Payment View**
+![alt text](image-5.png)
+
+
+**About/Contact View**
+![alt text](image-8.png)
+
+![alt text](image-9.png)
+
+
 
 ## Installation
 To install the E-Commerce Application, follow these steps:
