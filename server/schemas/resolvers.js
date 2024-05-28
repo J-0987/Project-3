@@ -1,5 +1,7 @@
 const { User, Product, Category, Order } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require('apollo-server');
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const mongoose = require('mongoose');
 
@@ -64,6 +66,10 @@ const resolvers = {
             populate: 'category_id',
           });
 
+          if (!user) {
+            throw new AuthenticationError('User not found');
+          }
+
           user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
           return user;
@@ -81,6 +87,10 @@ const resolvers = {
             path: 'orders.products',
             populate: 'category_id',
           });
+
+          if (!user) {
+            throw new AuthenticationError('User not found');
+          }
 
           const order = user.orders.id(_id);
           return order;
@@ -100,7 +110,7 @@ const resolvers = {
             product_data: {
               name: product.name,
               description: product.description,
-              images: [`${url}/images/${product.thumbnail}`],
+              images: [`${url}/images/${product.thumbnail}`],  // Ensure this matches how images are stored
             },
             unit_amount: Math.round(product.price * 100),
           },
@@ -120,7 +130,7 @@ const resolvers = {
         console.error("Error creating checkout session:", error);
         throw error;
       }
-    },       
+    }
   },
   Mutation: {
     addUser: async (parent, args) => {
@@ -136,22 +146,27 @@ const resolvers = {
     },
     addOrder: async (parent, { products }, context) => {
       try {
+        console.log("HERE NOW!!!!!!!!!!!!!!!!!!!!!!!");
         if (context.user) {
+          console.log("HERE NOW 2!!!!!!!!!!!!!!!!!!!!!!!");
           // Map each ProductInput to extract necessary fields
           const orderedProducts = products.map(product => ({
             _id: product._id, // _id is the product ID
             quantity: product.purchaseQuantity // purchaseQuantity is the desired quantity
           }));
-    
+
           // Create the order with the ordered products
           const order = new Order({ products: orderedProducts });
-    
+          console.log(order);
+          await order.save(); // Save the order to the database
+
           // Find the user and push the new order
-          await User.findByIdAndUpdate(
+          const updatedUser = await User.findByIdAndUpdate(
             context.user._id,
-            { $push: { orders: order } }
+            { $push: { orders: order } },
+            { new: true }
           );
-    
+
           console.log("Added order:", order);
           return order;
         }
