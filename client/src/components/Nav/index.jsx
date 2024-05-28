@@ -60,8 +60,8 @@ function Navigation() {
   return (
     <div className="nav-bar">
       <Navbar expand="lg" className="bg-body-tertiary nav-container">
-        <Container>
-          <Navbar.Brand as={Link} to="/">
+        <Container >
+          <Navbar.Brand  as={Link} to="/">
             THE SHOP
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
